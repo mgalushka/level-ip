@@ -12,8 +12,6 @@ struct netdev *loop;
 struct netdev *netdev;
 extern int running;
 
-extern inline struct eth_hdr *eth_hdr(struct sk_buff *skb);
-
 static struct netdev *netdev_alloc(char *addr, char *hwaddr, uint32_t mtu)
 {
     struct netdev *dev = malloc(sizeof(struct netdev));
