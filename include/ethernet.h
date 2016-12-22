@@ -25,7 +25,7 @@ struct netdev;
 
 uint8_t *skb_head(struct sk_buff *skb);
 
-struct eth_hdr 
+struct eth_hdr
 {
     uint8_t  dmac[6];
     uint8_t  smac[6];
@@ -33,13 +33,5 @@ struct eth_hdr
     uint8_t  payload[];
 } __attribute__((packed));
 
-inline struct eth_hdr *eth_hdr(struct sk_buff *skb)
-{
-    struct eth_hdr *hdr = (struct eth_hdr *)skb_head(skb);
-
-    hdr->ethertype = ntohs(hdr->ethertype);
-
-    return hdr;
-}
 
 #endif
