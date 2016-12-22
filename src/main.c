@@ -13,6 +13,8 @@
 
 #define MAX_CMD_LENGTH 6
 
+#define _XOPEN_SOURCE 600
+
 typedef void (*sighandler_t)(int);
 
 #define THREAD_CORE 0
@@ -41,7 +43,7 @@ static void *stop_stack_handler(void *arg)
         case SIGQUIT:
             running = 0;
             pthread_cancel(threads[THREAD_CORE]);
-            
+
             if (app_running) {
                 pthread_cancel(threads[THREAD_APP]);
             }
@@ -55,7 +57,7 @@ static void *stop_stack_handler(void *arg)
 static void init_signals()
 {
     int err;
-    
+
     sigemptyset(&mask);
     sigaddset(&mask, SIGINT);
     sigaddset(&mask, SIGQUIT);
@@ -87,7 +89,7 @@ static void run_threads()
         print_err("Could not create signal processor thread\n");
         return;
     }
-    
+
     if (app_running && pthread_create(&threads[THREAD_APP], NULL,
                                       cmd_to_run->cmd_func, cmd_to_run) != 0) {
         print_err("Could not create app thread for %s\n", cmd_to_run->cmd_str);
@@ -101,7 +103,7 @@ static void wait_for_threads()
         if (pthread_join(threads[THREAD_APP], NULL) != 0) {
             print_err("Error when joining app thread\n");
         };
-        
+
         if (kill(0, SIGQUIT) == -1) {
             print_err("Error when sending SIGQUIT to stack\n");
         };
