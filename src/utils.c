@@ -105,8 +105,8 @@ uint16_t checksum(void *addr, int count, int start_sum)
 
 int get_address(char *host, char *port, struct sockaddr *addr)
 {
-    addrinfo hints;
-    addrinfo *result, *rp;
+    struct addrinfo hints;
+    struct addrinfo *result, *rp;
     int s;
 
     memset(&hints, 0, sizeof(struct addrinfo));
