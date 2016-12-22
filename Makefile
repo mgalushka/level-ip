@@ -1,4 +1,4 @@
-CPPFLAGS = --std-c99 -I include -Wall -pthread
+CPPFLAGS = -std=c99 -I include -Wall -pthread
 
 src = $(wildcard src/*.c)
 obj = $(patsubst src/%.c, build/%.o, $(src))
