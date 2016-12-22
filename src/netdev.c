@@ -12,6 +12,8 @@ struct netdev *loop;
 struct netdev *netdev;
 extern int running;
 
+extern inline struct eth_hdr *eth_hdr(struct sk_buff *skb);
+
 static struct netdev *netdev_alloc(char *addr, char *hwaddr, uint32_t mtu)
 {
     struct netdev *dev = malloc(sizeof(struct netdev));
@@ -89,8 +91,8 @@ void *netdev_rx_loop()
 {
     while (running) {
         struct sk_buff *skb = alloc_skb(BUFLEN);
-        
-        if (tun_read((char *)skb->data, BUFLEN) < 0) { 
+
+        if (tun_read((char *)skb->data, BUFLEN) < 0) {
             print_error("ERR: Read from tun_fd: %s\n", strerror(errno));
             free_skb(skb);
             return NULL;
